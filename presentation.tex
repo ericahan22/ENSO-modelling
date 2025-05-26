@@ -1,0 +1,550 @@
+% Copyright 2019 by Junan Lin <junan_lin@hotmail.com>
+% This file may be distributed and/or modified under the MIT license
+% Reference: https://ramblingacademic.com/2015/12/08/how-to-quickly-overhaul-beamer-colors/
+\documentclass[9pt,xcolor=dvipsnames]{beamer}
+
+\mode<presentation>{\setbeamercovered{invisible}
+\usetheme{Madrid}
+}
+
+% Customize for Waterloo theme (gold and black)
+\definecolor{UWgold}{RGB}{254,209,66} % Waterloo gold
+\definecolor{darkgrey}{RGB}{169,169,169} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{appendixnumberbeamer}
+\usepackage{textgreek}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{array}
+\usepackage{caption}
+\captionsetup[figure]{font=footnotesize,labelfont=footnotesize}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage{neuralnetwork}
+\usetikzlibrary{shapes.geometric, arrows}
+
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\newcommand{\bTheta}{\mbox{\boldmath $\Theta$}}
+\newcommand{\bXi}{\mbox{\boldmath $\Xi$}}
+\tikzstyle{startstop} = [cycle, rounded corners, 
+minimum width=3cm, 
+minimum height=1cm,
+text centered, 
+draw=black, 
+fill=red!30]
+
+\tikzstyle{io} = [trapezium, 
+trapezium stretches=true, % A later addition
+trapezium left angle=70, 
+trapezium right angle=110, 
+minimum width=3cm, 
+minimum height=1cm, text centered, 
+draw=black, fill=blue!30]
+
+\tikzstyle{process} = [rectangle, 
+minimum width=3cm, 
+minimum height=1cm, 
+text centered, 
+text width=3cm, 
+draw=black, 
+fill=orange!30]
+
+\tikzstyle{decision} = [diamond, 
+minimum width=3cm, 
+minimum height=1cm, 
+text centered, 
+draw=black, 
+fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\setbeamercolor{palette primary}{bg=black,fg=UWgold}
+\setbeamercolor{palette secondary}{bg=white,fg=black}
+\setbeamercolor{palette tertiary}{bg=UWgold,fg=white}
+\setbeamercolor{palette quaternary}{bg=Black,fg=white}
+\setbeamercolor{structure}{fg=darkgrey} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=black} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=UWgold,fg=white}
+
+
+\usepackage{graphicx} % Allows including images
+\setbeamerfont{footnote}{size=\tiny}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{appendixnumberbeamer}
+\usepackage{textgreek}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{animate}
+\captionsetup[figure]{font=footnotesize,labelfont=footnotesize}
+
+
+\usepackage{neuralnetwork}
+\usepackage{multicol}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\pgfplotsset{compat=1.18}
+
+\usepackage{xspace}
+
+\usepackage{tikz}
+
+% Includes TOC at the beginning of each section
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\title[]{An Introduction to Mathematical Climate Modelling with Applications}
+\author[  Han \& Jiang \&  Wohlgemut ]{\Large \textbf{Erica Han}, \textbf{Joanna Jiang} and \textbf{Katrina Wohlgemut}
+\vspace{0.5cm} \\
+Mentor:  \textbf{Yusuf Aydogdu}}
+\institute[UW]
+{\textcolor{red}{\\
+\Large  Faculty of  Mathematics\\
+\vspace{0.5cm}
+University of Waterloo, Ontario, Canada
+ } \\ 
+\vspace{0.5cm}
+{\Large \color{blue} Women in Math Directed Reading Program}
+%\medskip
+}
+\date{April 7, 2025}
+% \titlegraphic{\makebox[\linewidth]{\includegraphics[height=.13\textheight]{UniversityOfWaterloo_logo_horiz_rgb.png}
+%\logo{\includegraphics[width=.25\paperwidth]{UniversityOfWaterloo_logo_horiz_rgb}}
+
+\titlegraphic{\vspace{0.45cm} \hspace{7.5cm}
+   \includegraphics[width=3cm]{UW_logo.png}
+}
+\begin{document}
+
+\maketitle
+
+\section{Section 1 : El Niño--Southern Oscillation (ENSO)}
+
+\begin{frame}{El Niño--Southern Oscillation}
+\begin{itemize}
+    \item Global climate phenomenon with significant ecological and societal impacts
+    \item Cycles between
+    \begin{itemize}
+        \item \textbf{El Niño}: Warm sea-surface temperature (SST) in eastern Pacific Ocean
+        \item \textbf{La Niña}: Cool SST in eastern Pacific Ocean
+    \end{itemize}
+    \item Mainly impacts tropics (e.g. Southeast Asia, Australia, South America)
+    \item Changing climate conditions can impact food security, air and water quality, ecosystems, human health, and disease transmission
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{Wild-fires.jpg}
+    \includegraphics[width=0.45\textwidth]{drought.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}{El Niño--Southern Oscillation}
+     \begin{center}
+\begin{tikzpicture}[node distance=2.75cm, every node/.style={align=center}]
+
+% Nodes
+\node (start) [circle, draw, startstop] {ENSO Cycle};
+\node (nino) [io, above right of=start] {El Niño};
+\node (neutral) [io, below of=start] {Neutral};
+\node (nina) [io, above left of=start] {La Niña};
+
+% Arrows forming a cycle
+\draw [arrow , bend left=20] (nino) to (neutral);
+\draw [arrow , bend left=20] (neutral) to (nina);
+\draw [arrow , bend left=20] (nina) to (nino);
+
+% Arrow from start
+%\draw [arrow] (start) -- (neutral);
+\caption{Add caption}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{El Niño--Southern Oscillation}
+
+\begin{itemize}
+
+    \item Modelled as interaction between SST, ocean, and atmosphere
+    \begin{itemize}
+        \item SST forces atmosphere through evaporation
+        \item Atmosphere forces ocean by wind stress
+        \item Ocean forces SST through thermocline feedback
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}
+        \centering
+        \includegraphics[width=0.31\textwidth]{ENSO_Normal.png} \hspace{1pt}
+        \includegraphics[width=0.31\textwidth]{El_Nino.png} \hspace{1pt}
+        \includegraphics[width=0.31\textwidth]{La_Nina.png}
+        \caption*{Adapted from NOAA/PMEL/TAO diagrams. Public domain via Wikimedia Commons.}
+\end{figure}
+    
+\end{frame}
+
+\begin{frame}{ENSO Model}
+\begin{figure}
+    \includegraphics[scale=0.5, left]{SST_cycle.png}
+\end{figure}
+\begin{figure}
+    \includegraphics[scale=0.4, right]{waves.png}
+    \caption*{ENSO coupling (top) and reflection of the waves at the boundaries (bottom)}
+\end{figure}
+\end{frame}
+
+\begin{frame}{ENSO Model}
+
+    {\footnotesize     \textbf{\color{blue} Atmosphere model :}
+\begin{align*}\label{eq:atm_trun}
+  &  \partial_{t} K^{A}(x,t) + \partial_{x} K^{A}(x,t) = \chi_{A}  \alpha_{q}  (2 -  2\overline{Q})^{-1} {\color{orange} T(x,t)} \\
+  &  \partial_{t} R^{A}(x,t) -\partial_{x} R^{A}(x,t)/3 = \chi_{A} \alpha_{q}  (3 - 3 \overline{Q})^{-1}  {\color{orange}T(x,t)} 
+\end{align*}
+where $K^{A}(x,t)$ and $R^{A}(x,t)$ are \textbf{ atmospheric Kelvin and Rossby waves},respectively. Boundary conditions : 
+\begin{equation*}
+K^{A} (0,t) = r_w R^{A}(0,t) \hspace{0.35cm} \text{and} \hspace{0.35cm}  R^{A} (L_O,t) =r_E K^{A}(L_{O},t)  
+\end{equation*} 
+\vspace{0.5cm} \\
+    \textbf{\color{red}Ocean model:}
+    \begin{align*}\label{eq:ocean_trun}
+    &    \partial_{t} K^{O}(x,t) + c \partial_{x} K^{O}(x,t)   = \chi_{O} \kappa c/2 {\color{blue}(K^{A}(x,t) - R^{A}(x,t)  })   \\
+    &   \partial_{t} R^{O}(x,t) - c/3 \partial_{x} R^{O}(x,t)  = -\chi_{O} \kappa  c/3 {\color{blue}(K^{A}(x,t) - R^{A}(x,t)  }) ) 
+    \end{align*}
+ where $K^{O}(x,t)$ and $R^{O}(x,t)$ are \textbf{ oceanic Kelvin and Rossby waves}. Boundary conditions :  \\
+ \begin{equation*}
+    K^{O} (0,t) = r_{W}R^{O} (0,t) \hspace{0.35cm} \text{and} \hspace{0.35cm} R^{O} (L_{O},t) = r_{E} K^{O} (L_{O},t)
+\end{equation*}
+ \vspace{0.5cm} \\ 
+\textbf{\color{orange} Sea Surface Temperature (SST) model :}
+\begin{equation*}\label{eq:SST_trun}
+    \partial_{t} T(x,t)  =   -c \zeta \alpha_{q} T + c \eta {\color{red}(K^{O}(x,t) + R^{O}(x,t))}
+\end{equation*}
+where $T(x,t)$ is the \textbf{SST}. } \\
+{\footnotesize  Based on the paper  \textbf{Thual, S., Majda, A. J., Chen, N., \& Stechmann, S. N. (2016). Simple stochastic model for El Niño with westerly wind bursts.} We modified atmosphere model and boundary conditions for simplicity \cite{Chen2018}.  }
+\end{frame}
+
+\begin{frame}{Finite Difference}
+
+In order to do numerical simulation, we need to discretize the equations in space and time. We use the first-order forward/backward difference.
+
+\begin{exampleblock}{Example: Discretization of Kelvin atmosphere equation}
+First-order forward time--backward space difference:
+\begin{align*}
+    &\frac{\partial K^{A}(t,x)}{\partial t} + \frac{\partial K^{A}(t,x)}{\partial x} = C T(t,x) \tag{$C=\chi_{A}  \alpha_{q}  (2 -  2\overline{Q})^{-1}$}\\
+    \implies &\frac{K^A(t{\color{RoyalBlue} +\Delta t}, x)-K^A(t,x)}{\Delta t}+\frac{K^A(t,x)-K^A(t,x{\color{RoyalBlue}-\Delta x})}{\Delta x} = CT(t,x) \\
+    \implies & K^A(t+\Delta t, x)=K^A(t,x)-\frac{\Delta t}{\Delta x}(K^A(t,x)-K^A(t,x-\Delta x))+C\Delta tT(t,x)\\
+    \implies & K_{i+1}^{A,j}=K_i^{A,j}-\frac{\Delta t}{\Delta x}(K_i^{A,j}-K_i^{A,j-1})+C\Delta tT_i^j \tag{$i=t, j=x$}
+\end{align*}
+\begin{flalign*}
+    \text{Initial conditions ($j=0$): }K_{i+1}^{A,0}&=K_i^{A,0}-\frac{\Delta t}{\Delta x}(K_i^{A,0}-K_i^{A,-1})+C\Delta tT_i^0&& \\
+    &=K_i^{A,0}-\frac{\Delta t}{\Delta x}(K_i^{A,0}-{\color{RoyalBlue} r_wR_i^{A,0}})+C\Delta tT_i^0&&
+\end{flalign*}
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}{Modelling \& Simulation Parameters}
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Value} & \textbf{Description} \\ \hline
+        $c$              & 0.5            &    Ocean phase speed                  \\ \hline
+      %  $c_A?$              & 1              &         Atmosphere phase speed             \\ \hline
+        $\chi_A$           & 0.3            &     Meridional projection coefficient atm.                 \\ \hline
+        $\chi_O$           & 1              &     Meridional projection coefficient ocean                   \\ \hline
+        $\xi$              & 1              &  Latent heating exchange coefficient                    \\ \hline
+        $\alpha_q$         & 3              &     Latent heating factor                 \\ \hline
+        $\gamma$           & 6.5            &   Wind stress coefficient                   \\ \hline
+        $\eta$             & $1.5 + 0.5 \tanh(7.5(x - L/2))$ &   Profile of thermocline feedback   \\ \hline
+        $\hat{Q}$          & 0.01           &    Mean vertical moisture gradient                  \\ \hline
+        $M$                & {\color{red}8000}          &  {\color{red} Number of time steps} \\ \hline
+        $N$                & {\color{red} 200}            &  {\color{red}Number of space steps} \\ \hline
+        $L$                & 1              & Space length         \\ \hline
+        $T_f$              & 40             & Time length          \\ \hline
+    \end{tabular}
+    \caption*{Parameter values used in the model}
+    \label{tab:parameters}
+\end{table}
+
+\end{frame}
+
+\begin{frame}{Simulation Results}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{sim_plot.png}
+    \caption*{$K^A$, $R^A$, $K^O$, $R^O$, and $T$ over space ($x$-axis) and time ($y$-axis)}
+\end{figure}
+    
+\end{frame}
+
+\section{Section 2 : Dimensionality Reduction Using POD}
+
+\begin{frame}{Dimension Reduction}
+
+\textbf{What:}
+
+Dimensionality reduction is the process of transforming high-dimensional data into a lower-dimensional representation while preserving its key features.
+
+
+\textbf{Why:}
+
+\textbf{Improve accuracy:} \\
+High-dimensional data often contains redundant or irrelevant features.
+
+\textbf{Avoid the Curse of Dimensionality:} \\
+Dimensionality reduction removes these, improving model performance. \\
+As the number of dimensions increases data becomes sparse, making it harder to analyze and visualize.
+\begin{figure} 
+        \centering
+        \includegraphics[width=0.7\textwidth]{dim3 -2.png}
+        \caption{Geometric illustration of the dimensionality reduction as a mapping from a sphere in $R^n$ to an ellipsoid in $R^m$ \cite{Brunton2022}}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Function expansion}
+A common way is through eigenfunction expansions:
+\[
+\boxed{u(t,x) \approx \sum_{k=1}^{r} a_k(t) \psi_k(x)}
+\]
+
+\begin{itemize}
+    \item $\psi_k(x)$: spatial basis functions
+    \item $a_k(t)$: corresponding time-dependent coefficients
+    \item $r$: the number of basis elements
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithm}
+\begin{figure} 
+        \centering
+        \includegraphics[width=0.5\textwidth]{dim change.png} \hspace{1pt}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Computing Auto-Correlation Matrices}
+
+    To construct the correlation matrix, we compute the auto-correlation matrices by multiplying each matrix with its transpose:
+
+    \[
+    \mathbf{C_{KA}}_{(8000 \times 8000)} = \mathbf{KA}_{8000\times 200} \cdot \mathbf{KA}^T_{200 \times 8000}
+    \]
+
+    \[
+    \mathbf{C_{RA}} = \mathbf{RA} \cdot \mathbf{RA}^T
+    \]
+
+    \[
+    \mathbf{C_{KO}} = \mathbf{KO} \cdot \mathbf{KO}^T
+    \]
+
+    \[
+    \mathbf{C_{RO}} = \mathbf{RO} \cdot \mathbf{RO}^T
+    \]
+
+    \[
+    \mathbf{C_T} = \mathbf{T} \cdot \mathbf{T}^T
+    \]
+ \begin{equation*}
+    \boxed{ \mathbf{C}_{8000 \times 8000}=(\mathbf{C}_{KA}+\mathbf{C}_{RA}+\mathbf{C}_{KO}+\mathbf{C}_{RO}+\mathbf{C}_{T})/M}
+ \end{equation*}   
+\end{frame}
+
+\begin{frame}{Eigenvalue Decomposition}
+\begin{itemize}
+    \item Calculate the eigenvalues and eigenvectors of the correlation matrix $\textbf{C}$
+%\end{itemize}
+    \begin{equation*}
+        \textbf{C} v = \lambda v 
+    \end{equation*}
+    \item Construct the POD modes for each component 
+    \begin{itemize}
+     \item \begin{equation*}
+        \phi_{KA} = \sum v \times KA/ \sqrt{M \times \lambda}
+    \end{equation*}
+     \item \begin{equation*}
+        \phi_{RA} = \sum v \times  RA / \sqrt{M \times \lambda}
+    \end{equation*}
+     \item \begin{equation*}
+        \phi_{KO} = \sum v \times KO/ \sqrt{M \times \lambda}
+    \end{equation*}
+     \item \begin{equation*}
+        \phi_{RO} = \sum v \times RO / \sqrt{M \times \lambda}
+    \end{equation*}
+        \item \begin{equation*}
+        \phi_T = \sum v \times T/ \sqrt{M \times \lambda}
+    \end{equation*}
+    \end{itemize}
+    \item Combine them
+    \begin{equation*}
+        \psi = (\phi_{KA}, \phi_{RA}, \phi_{KO}, \phi_{RO}, \phi_{T})
+    \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Eigenvalues of Correlation Matrix}
+    \begin{figure} 
+        \centering
+        \includegraphics[width=0.7\textwidth]{Figures/DRP_Eigenvalues.png} \hspace{1pt}
+\caption{From the graph, we can clearly see that the first four points stand out the most. After the fourth point, the gaps between them become smaller, indicating that the remaining components contribute less significant information and can be disregarded.}
+\end{figure}  
+\end{frame}
+
+
+
+%\begin{frame}{SVD}
+%POD finds an optimal orthonormal basis from data to represent the dataset in a low-dimensional form.
+
+%$$
+%X = U \Sigma V^T
+%$$
+
+%$U$ (left singular vectors): Contains orthonormal basis vectors
+
+%$\Sigma$(singular values):A diagonal matrix containing the singular values
+
+%$V$(right singular vectors): Contains orthonormal basis vectors
+
+
+%\end{frame}
+\begin{frame}{Root Mean Square  Error (RMSE) Using Different Number of Modes}
+    The sharp initial drop indicates the first few principle components are needed.
+\vspace{0.25cm}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{Figures/DRP_RMSE.png}
+    \caption{The reconstruction RMSE of SST using different number of modes }
+    \label{fig:enter-label}
+\end{figure}
+\end{frame}
+
+\begin{frame}{POD modes and time series}
+\[
+\boxed{u(t,x) \approx \sum_{k=1}^{4} a_k(t) \psi_k(x)}
+\]
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Figures/DRP_POD_modes.png}
+        \caption{Spatial modes $\Psi_k(x)$}
+        \end{figure}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Figures/DRP_POD_time_series.png}
+        \caption{Time-dependent coefficients $a_k(t)$}
+        \end{figure}
+    \end{minipage}
+\end{frame}
+
+\section{Section 3 : Model Discovery Using SINDy}
+\begin{frame}{SINDy Equation}
+\begin{itemize}
+    \item Find ODE model from data for dynamic system
+    \item Assume dynamics controlled by only a few variables
+    \item Balances complexity of model with accuracy
+\end{itemize}
+\begin{figure} 
+        \centering
+        \includegraphics[width=0.8\textwidth]{sindyEquation.png} \hspace{1pt}
+\end{figure}
+\begin{itemize}
+    \item Use sequential threshold techniques for optimization
+    \begin{itemize}
+        \item Candidate library and threshold can be adjusted as needed
+    \end{itemize}
+    \item Use strategies for model selection which penalize large number of terms \cite{Brunton2016}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{SINDy Example}
+\begin{figure} 
+        \centering
+        \includegraphics[width=0.8\textwidth]{lorenz.png} \hspace{1pt}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Coefficient Matrix for Model Equations}
+\begin{figure} 
+        \centering
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.35\textwidth]{cfModel.png}
+            \caption{From top to bottom polynomials up to third degree}
+        \end{figure} 
+\end{figure}
+\end{frame}
+
+\begin{frame}{SINDy Results}
+\begin{figure}
+    \includegraphics[width=0.9\textwidth]{allQandSIM.png}
+    \hspace{1pt}
+\end{figure}
+\begin{itemize}
+    \item Used sequentially thresholded least squares optimization with threshold 0.02
+    \item Candidate library is polynomials up to degree 3
+    \item Used finite difference for differentiation
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Exact Dynamics compared to SINDy Model}
+\begin{figure} 
+        \centering
+        \includegraphics[width=0.9\textwidth]{QvsSIM.png} \hspace{1pt}
+\end{figure}
+\end{frame}
+
+\begin{frame}{SINDy Results}
+\begin{figure} 
+        \centering
+        \includegraphics[width=0.9\textwidth]{sindyTimeSeries.png} 
+        \caption{Temperature, POD reconstruction, SINDy reconstruction, L1 error for POD, L1 error for SINDy}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Conclusion}
+    \begin{itemize}
+        \item ENSO can be mathematically modeled using coupled PDEs describing interactions between sea surface temperature, the atmosphere, and the ocean.
+        \item The PDEs are discretized using finite differences for numerical simulation, enabling the computation of the observed temperature $T$ over space and time.
+        \item Dimensionality reduction is applied to reduce the system's dimension from 200 to 4.
+        \item The Root Mean Square Error (RMSE) is calculated for temperature, POD modes, and time series.
+        \item The SINDy algorithm is used to identify an ODE model for the dynamical system.
+        \item The original data is compared to the reconstructed data obtained from the SINDy equations.
+    \end{itemize}
+\end{frame}
+\begin{frame}{References}
+    \bibliographystyle{apalike}
+    \nocite{*}
+    \bibliography{refs}
+\end{frame}
+
+\end{document}
